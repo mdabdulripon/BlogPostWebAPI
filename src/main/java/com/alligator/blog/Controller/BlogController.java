@@ -1,4 +1,4 @@
-package com.blog.Controller;
+package com.alligator.blog.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
