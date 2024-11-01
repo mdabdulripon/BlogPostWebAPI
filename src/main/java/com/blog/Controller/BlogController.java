@@ -1,4 +1,4 @@
-package com.web.api.blog.Controller;
+package com.blog.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
