@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/blog")
 public class BlogController {
@@ -61,6 +64,27 @@ public class BlogController {
         returnValue.setOperationName(RequestOperationName.DELETE.name());
         _blogPostService.delete(id);
         returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
+        return returnValue;
+    }
+
+
+    @GetMapping()
+    public List<BlogPostResponseModel> getBlogs(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
+                                                @RequestParam(value = "pageSize", defaultValue = "3") int pageSize,
+                                                @RequestParam(value = "merchantName") String merchantName) {
+
+        List<BlogPostResponseModel> returnValue = new ArrayList<>();
+        ModelMapper modelMapper = new ModelMapper();
+
+        // Call the findBlogs method from the service
+        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName);
+
+        // Convert each BlogPostDto to BlogPostResponseModel
+        for (BlogPostDto blogPostDto : blogPosts) {
+            BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);
+            returnValue.add(blogPostResponseModel);
+        }
+
         return returnValue;
     }
 
