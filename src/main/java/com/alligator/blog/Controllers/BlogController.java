@@ -72,7 +72,8 @@ public class BlogController {
     @GetMapping()
     public List<BlogPostResponseModel> getBlogs(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                 @RequestParam(value = "pageSize", defaultValue = "3") int pageSize,
-                                                @RequestParam(value = "merchantName") String merchantName
+                                                @RequestParam(value = "merchantName") String merchantName,
+                                                @RequestParam(value = "keyword", required = false) String keyword
 //                                                @RequestParam(value = "title", required = false) String title,
 //                                                @RequestParam(value = "startDate", required = false) OffsetDateTime startDate,
 //                                                @RequestParam(value = "endDate", required = false) OffsetDateTime endDate
@@ -83,7 +84,7 @@ public class BlogController {
         ModelMapper modelMapper = new ModelMapper();
 
         // Call the findBlogs method with OffsetDateTime filters
-        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName);
+        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName, keyword);
 
         for (BlogPostDto blogPostDto : blogPosts) {
             BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);

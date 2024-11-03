@@ -56,28 +56,14 @@ public class BlogPostServiceImpl implements BlogPostService {
         return modelMapper.map(updatePost, BlogPostDto.class);
     }
 
-//    @Override
-//    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName) {
-//        if (merchantName == null) {
-//            throw new IllegalArgumentException("merchantName cannot be null");
-//        }
-//
-//        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-//
-//        // Fetch paginated results based on merchant name
-//        Page<BlogPostEntity> blogPostPage = _blogPostRepository.findByMerchantName(merchantName, pageable);
-//
-//        // Map entities to DTOs
-//        return blogPostPage.stream()
-//                .map(blogPost -> new ModelMapper().map(blogPost, BlogPostDto.class))
-//                .collect(Collectors.toList());
-//    }
-
     @Override
-    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName) {
+    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword) {
+
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName));
+        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
+                    .and(BlogPostSpecifications.hasTitleOrBody(keyword));  // Search in both title and body
+
 //                .and(BlogPostSpecifications.hasTitle(title))
 //                .and(BlogPostSpecifications.publishedAfter(startDate))
 //                .and(BlogPostSpecifications.publishedBefore(endDate));
