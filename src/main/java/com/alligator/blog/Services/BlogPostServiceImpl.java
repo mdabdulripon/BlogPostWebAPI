@@ -5,20 +5,31 @@ import com.alligator.blog.Repositories.BlogPostRepository;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogPostServiceImpl implements BlogPostService {
 
-    @Autowired
-    BlogPostRepository _blogPostRepository;
+    private final BlogPostRepository _blogPostRepository;
+
+    BlogPostServiceImpl(BlogPostRepository blogPostRepository) {
+        _blogPostRepository = blogPostRepository;
+    }
 
     @Override
     public BlogPostDto create(BlogPostDto blogPostDto) {
+        // Set the ID to null to ensure a new record is created
         ModelMapper modelMapper = new ModelMapper();
         BlogPostEntity blogPostEntity = modelMapper.map(blogPostDto, BlogPostEntity.class);
+        // Set the ID to null to ensure a new record is created
+        blogPostEntity.setId(null);
         BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
 
         return modelMapper.map(savePost, BlogPostDto.class);
@@ -44,7 +55,15 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     @Override
     public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName) {
-        return List.of();
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        // Fetch paginated results based on merchant name
+        Page<BlogPostEntity> blogPostPage = _blogPostRepository.findByMerchantName(merchantName, pageable);
+
+        // Map entities to DTOs
+        return blogPostPage.stream()
+                .map(blogPost -> new ModelMapper().map(blogPost, BlogPostDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
