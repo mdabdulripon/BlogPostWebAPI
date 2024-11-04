@@ -10,6 +10,7 @@ import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import com.alligator.blog.Shared.Enums.RequestOperationName;
 import com.alligator.blog.Shared.Enums.RequestOperationStatus;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,10 +74,9 @@ public class BlogController {
     public List<BlogPostResponseModel> getBlogs(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                 @RequestParam(value = "pageSize", defaultValue = "3") int pageSize,
                                                 @RequestParam(value = "merchantName") String merchantName,
-                                                @RequestParam(value = "keyword", required = false) String keyword
-//                                                @RequestParam(value = "title", required = false) String title,
-//                                                @RequestParam(value = "startDate", required = false) OffsetDateTime startDate,
-//                                                @RequestParam(value = "endDate", required = false) OffsetDateTime endDate
+                                                @RequestParam(value = "keyword", required = false) String keyword,
+                                                @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
+                                                @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
     ) {
 
 
@@ -84,7 +84,7 @@ public class BlogController {
         ModelMapper modelMapper = new ModelMapper();
 
         // Call the findBlogs method with OffsetDateTime filters
-        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName, keyword);
+        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName, keyword, startDate, endDate);
 
         for (BlogPostDto blogPostDto : blogPosts) {
             BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);

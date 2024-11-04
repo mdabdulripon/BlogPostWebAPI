@@ -10,7 +10,7 @@ public interface BlogPostService {
     BlogPostDto update(BlogPostDto blogPostDto);
 //    List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName);
 //String merchantName, String title, OffsetDateTime startDate, OffsetDateTime endDate
-    List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword);
+    List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, OffsetDateTime startDate, OffsetDateTime endDate);
     BlogPostDto findBlogById(Long id);
     void delete(Long id);
 }

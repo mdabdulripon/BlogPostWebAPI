@@ -57,16 +57,13 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword) {
+    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, OffsetDateTime startDate, OffsetDateTime endDate) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
-                    .and(BlogPostSpecifications.hasTitleOrBody(keyword));  // Search in both title and body
-
-//                .and(BlogPostSpecifications.hasTitle(title))
-//                .and(BlogPostSpecifications.publishedAfter(startDate))
-//                .and(BlogPostSpecifications.publishedBefore(endDate));
+                    .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+                    .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 
         Page<BlogPostEntity> blogPostPage = _blogPostRepository.findAll(specification, pageable);
 
