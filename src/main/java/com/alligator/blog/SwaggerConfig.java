@@ -13,7 +13,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("BlogWebAPI")
                         .version("1.0")
-                        .description("The Users API provides a comprehensive interface for managing blog posts" +
-                                "with CRUD capabilities"));
+                        .description("This project empowers merchants to create and manage their own blog posts, enabling them to consistently maintain and update their content"));
     }
 }
