@@ -1,6 +1,7 @@
 package com.alligator.blog.Shared.Dtos;
 
 import com.alligator.blog.Shared.Enums.BlogStatus;
+import com.alligator.blog.Shared.Enums.BlogType;
 
 import java.time.OffsetDateTime;
 
@@ -11,6 +12,7 @@ public class BlogPostDto {
     private String title;
     private String body;
     private String mainImageUrl;
+    private BlogType type;
     private BlogStatus status;
 
     private OffsetDateTime createdAt;
@@ -62,6 +64,14 @@ public class BlogPostDto {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public BlogType getType() {
+        return type;
+    }
+
+    public void setType(BlogType type) {
+        this.type = type;
     }
 
     public BlogStatus getStatus() {

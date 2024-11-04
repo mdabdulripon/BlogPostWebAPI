@@ -10,7 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BlogPostRepository extends JpaRepository<BlogPostEntity, Long>, JpaSpecificationExecutor<BlogPostEntity> {
     BlogPostEntity findBlogPostById(Long id);
+
     Page<BlogPostEntity> findByMerchantName(String merchantName, Pageable pageable);
+
     BlogPostEntity findBlogPostsByMerchantName(String merchantName);
+
     BlogPostEntity findBlogPostsByUserId(String userId);
 }

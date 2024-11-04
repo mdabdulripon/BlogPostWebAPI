@@ -5,7 +5,6 @@ import com.alligator.blog.Repositories.BlogPostRepository;
 import com.alligator.blog.Shared.BlogPostSpecifications;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +41,7 @@ public class BlogPostServiceImpl implements BlogPostService {
     public BlogPostDto update(BlogPostDto blogPostDto) {
         BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(blogPostDto.getId());
         if (blogPostEntity == null) {
-            return null; // TODO: Throw Exception
+            throw new IllegalArgumentException("BlogPost with id " + blogPostDto.getId() + " not found");
         }
 
         blogPostEntity.setTitle(blogPostDto.getTitle());
@@ -51,6 +49,7 @@ public class BlogPostServiceImpl implements BlogPostService {
         blogPostEntity.setUpdatedAt(blogPostDto.getUpdatedAt());
         blogPostEntity.setStatus(blogPostDto.getStatus());
         blogPostEntity.setMainImageUrl(blogPostDto.getMainImageUrl());
+        blogPostEntity.setType(blogPostDto.getType());
 
         BlogPostEntity updatePost = _blogPostRepository.save(blogPostEntity);
         ModelMapper modelMapper = new ModelMapper();
@@ -61,27 +60,28 @@ public class BlogPostServiceImpl implements BlogPostService {
     public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword,
                                        OffsetDateTime startDate, OffsetDateTime endDate, String sortBy, String sortDirection) {
 
+        if (merchantName == null) {
+            throw new IllegalArgumentException("merchantName cannot be null");
+        }
+
         // Determine the sort direction based on the provided parameter
         Sort.Direction direction = sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortBy));
 
-        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
-                .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName)).and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
                 .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 
         Page<BlogPostEntity> blogPostPage = _blogPostRepository.findAll(specification, pageable);
 
-        return blogPostPage.stream()
-                .map(blogPost -> new ModelMapper().map(blogPost, BlogPostDto.class))
-                .collect(Collectors.toList());
+        return blogPostPage.stream().map(blogPost -> new ModelMapper().map(blogPost, BlogPostDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public BlogPostDto findBlogById(Long id) {
         BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(id);
         if (blogPostEntity == null) {
-            return null; // TODO: Throw Exception
+            throw new IllegalArgumentException("BlogPost with id " + id + " not found");
         }
 
         return new ModelMapper().map(blogPostEntity, BlogPostDto.class);
@@ -91,7 +91,7 @@ public class BlogPostServiceImpl implements BlogPostService {
     public void delete(Long id) {
         BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(id);
         if (blogPostEntity == null) {
-            return; // TODO: Throw Exception
+            throw new IllegalArgumentException("BlogPost with id " + id + " does not exist");
         }
 
         _blogPostRepository.delete(blogPostEntity);

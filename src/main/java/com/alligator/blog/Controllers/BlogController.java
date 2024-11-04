@@ -11,12 +11,10 @@ import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import com.alligator.blog.Shared.Enums.RequestOperationName;
 import com.alligator.blog.Shared.Enums.RequestOperationStatus;
 import org.modelmapper.ModelMapper;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +44,7 @@ public class BlogController {
         BlogPostDto createBlog = _blogPostService.create(blogPostDto);
         BlogPostResponseModel returnValue = modelMapper.map(createBlog, BlogPostResponseModel.class);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(returnValue);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
 
     @PutMapping

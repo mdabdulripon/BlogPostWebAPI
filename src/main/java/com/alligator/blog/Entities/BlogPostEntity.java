@@ -1,6 +1,7 @@
 package com.alligator.blog.Entities;
 
 import com.alligator.blog.Shared.Enums.BlogStatus;
+import com.alligator.blog.Shared.Enums.BlogType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class BlogPostEntity {
     private String title;
     private String body;
     private String mainImageUrl;
+    private BlogType type;
     private BlogStatus status;
 
     private OffsetDateTime createdAt;
@@ -71,6 +73,14 @@ public class BlogPostEntity {
 
     public void setMainImageUrl(String mainImageUrl) {
         this.mainImageUrl = mainImageUrl;
+    }
+
+    public BlogType getType() {
+        return type;
+    }
+
+    public void setType(BlogType type) {
+        this.type = type;
     }
 
     public BlogStatus getStatus() {

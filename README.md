@@ -2,10 +2,10 @@
 
 This project empowers merchants to create and manage their own blog posts, enabling them to consistently maintain and update their content
 
-### Must Have TODO
-- [x] Create a `QueryParamsRequestModel` class and move the filters in the class
+### Must Have TODO (MVP)
 - [x] Add Type of the blogs
-- [x] Add content blocks, this may be replace the body
+- [x] Add content blocks, this can replace the body
+- [x] Add unit test
 
   ```
   	@OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -13,6 +13,7 @@ This project empowers merchants to create and manage their own blog posts, enabl
   ```
 
 ### Advance TODO
+- [x] Add Automation Test
 - [x] Add Comments Entity
   ```
   	@OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

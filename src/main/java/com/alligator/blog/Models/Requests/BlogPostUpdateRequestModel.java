@@ -1,6 +1,7 @@
 package com.alligator.blog.Models.Requests;
 
 import com.alligator.blog.Shared.Enums.BlogStatus;
+import com.alligator.blog.Shared.Enums.BlogType;
 
 import java.time.OffsetDateTime;
 
@@ -11,6 +12,7 @@ public class BlogPostUpdateRequestModel {
     private String title;
     private String body;
     private String mainImageUrl;
+    private BlogType type;
     private BlogStatus status;
     private OffsetDateTime updatedAt = OffsetDateTime.now();
 
@@ -62,11 +64,27 @@ public class BlogPostUpdateRequestModel {
         this.mainImageUrl = mainImageUrl;
     }
 
+    public BlogType getType() {
+        return type;
+    }
+
+    public void setType(BlogType type) {
+        this.type = type;
+    }
+
     public BlogStatus getStatus() {
         return status;
     }
 
     public void setStatus(BlogStatus status) {
         this.status = status;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
