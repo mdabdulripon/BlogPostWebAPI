@@ -2,6 +2,7 @@ package com.alligator.blog.Controllers;
 
 import com.alligator.blog.Models.Requests.BlogPostCreateRequestModel;
 import com.alligator.blog.Models.Requests.BlogPostUpdateRequestModel;
+import com.alligator.blog.Models.Requests.QueryParamsRequestModel;
 import com.alligator.blog.Models.Response.BlogPostResponseModel;
 import com.alligator.blog.Models.Response.OperationStatusResponseModel;
 import com.alligator.blog.Services.BlogPostService;
@@ -71,20 +72,18 @@ public class BlogController {
 
 
     @GetMapping()
-    public List<BlogPostResponseModel> getBlogs(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
-                                                @RequestParam(value = "pageSize", defaultValue = "3") int pageSize,
-                                                @RequestParam(value = "merchantName") String merchantName,
-                                                @RequestParam(value = "keyword", required = false) String keyword,
-                                                @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
-                                                @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
-    ) {
-
-
+    public List<BlogPostResponseModel> getBlogs(QueryParamsRequestModel params) {
         List<BlogPostResponseModel> returnValue = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
 
         // Call the findBlogs method with OffsetDateTime filters
-        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName, keyword, startDate, endDate);
+        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(
+                params.getPageNumber(),
+                params.getPageSize(),
+                params.getMerchantName(),
+                params.getKeyword(),
+                params.getStartDate(),
+                params.getEndDate());
 
         for (BlogPostDto blogPostDto : blogPosts) {
             BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);
