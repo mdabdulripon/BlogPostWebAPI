@@ -1,0 +1,156 @@
+[
+  {
+    "id": 4,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "The Benefits of Mindfulness Meditation",
+    "body": "Mindfulness meditation has numerous benefits for mental well-being. Learn how to incorporate it into your daily routine for a calmer, more focused mind.",
+    "mainImageUrl": "mindfulness.png",
+    "status": "PUBLISHED",
+    "createdAt": "2023-11-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 5,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "Understanding Cryptocurrency: A Beginner's Guide",
+    "body": "Cryptocurrency is a complex yet fascinating topic. This beginner's guide will help you understand the basics and how to get started.",
+    "mainImageUrl": "cryptocurrency.png",
+    "status": "DRAFT",
+    "createdAt": "2023-12-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 6,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "The Future of Renewable Energy",
+    "body": "Renewable energy sources are becoming increasingly important. Explore the latest advancements and how they can shape a sustainable future.",
+    "mainImageUrl": "renewableenergy.png",
+    "status": "PUBLISHED",
+    "createdAt": "2023-01-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 7,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "Top 10 Healthy Recipes for Busy Professionals",
+    "body": "Eating healthy can be challenging with a busy schedule. Here are ten easy and nutritious recipes to fuel your day!",
+    "mainImageUrl": "healthyrecipes.png",
+    "status": "DRAFT",
+    "createdAt": "2023-03-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 8,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "Harnessing the Power of Social Media for Business Growth",
+    "body": "Social media is a powerful tool for business growth. Learn how to effectively leverage platforms like Instagram and Facebook to reach your audience.",
+    "mainImageUrl": "socialmediagrowth.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-03-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 9,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "Traveling on a Budget: Tips for Affordable Adventures",
+    "body": "Traveling doesn't have to break the bank. Here are some tips and tricks for enjoying affordable adventures without compromising on experiences.",
+    "mainImageUrl": "budgettravel.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-06-03T03:02:19.453719Z",
+    "updatedAt": null
+  },
+  {
+    "id": 10,
+    "userId": "16",
+    "merchantName": "zahin",
+    "title": "The Importance of Mental Health in the Workplace",
+    "body": "Mental health is just as important as physical health. Discover strategies for fostering a supportive work environment and promoting employee well-being.",
+    "mainImageUrl": "mentalhealthworkplace.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T03:06:53.416732Z",
+    "updatedAt": null
+  },
+  {
+    "id": 1,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "Exploring the World of Digital Marketing",
+    "body": "Digital marketing is evolving rapidly. From social media strategies to SEO, staying updated is essential. Learn the top trends and how they can boost your business!",
+    "mainImageUrl": "digitalmarketing.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T02:54:43.500551Z",
+    "updatedAt": null
+  },
+  {
+    "id": 2,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "The Rise of E-commerce in 2024",
+    "body": "E-commerce has transformed shopping habits globally. Dive into the latest insights on how consumer preferences are shaping the future of online retail.",
+    "mainImageUrl": "ecommerce2024.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T02:55:02.936511Z",
+    "updatedAt": null
+  },
+  {
+    "id": 3,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "Sustainable Living: Tips for Eco-Friendly Choices",
+    "body": "Living sustainably is crucial for our planet's future. Explore practical tips on reducing waste, conserving energy, and making eco-friendly choices.",
+    "mainImageUrl": "sustainableliving.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T03:07:50.061037Z",
+    "updatedAt": null
+  },
+  {
+    "id": 11,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "5 Essential Skills for the Future Workforce",
+    "body": "Adaptability, problem-solving, and digital literacy are just a few of the must-have skills for future professionals. Learn how to stay ahead in a rapidly changing world.",
+    "mainImageUrl": "futureworkforce.png",
+    "status": "DRAFT",
+    "createdAt": "2024-11-03T03:15:13.338745Z",
+    "updatedAt": null
+  },
+  {
+    "id": 12,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "Unlocking the Potential of AI in Education",
+    "body": "Artificial Intelligence is revolutionizing education, making personalized learning a reality. Discover how AI tools are enhancing the classroom experience.",
+    "mainImageUrl": "AIeducation.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T03:15:43.903487Z",
+    "updatedAt": null
+  },
+  {
+    "id": 13,
+    "userId": "3",
+    "merchantName": "A12345",
+    "title": "Healthy Habits for Remote Work Success",
+    "body": "Working from home has its perks, but maintaining healthy habits can be challenging. Here are tips to stay productive and keep a work-life balance.",
+    "mainImageUrl": "remotehealth.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T03:15:52.414997Z",
+    "updatedAt": null
+  },
+  {
+    "id": 14,
+    "userId": "4",
+    "merchantName": "B56789",
+    "title": "The Rise of E-commerce in 2024",
+    "body": "E-commerce has transformed shopping habits globally. Dive into the latest insights on how consumer preferences are shaping the future of online retail.",
+    "mainImageUrl": "ecommerce2024.png",
+    "status": "PUBLISHED",
+    "createdAt": "2024-11-03T03:16:01.46571Z",
+    "updatedAt": null
+  }
+]
