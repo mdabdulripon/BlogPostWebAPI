@@ -83,7 +83,10 @@ public class BlogController {
                 params.getMerchantName(),
                 params.getKeyword(),
                 params.getStartDate(),
-                params.getEndDate());
+                params.getEndDate(),
+                params.getSortBy(),
+                params.getSortDirection()
+        );
 
         for (BlogPostDto blogPostDto : blogPosts) {
             BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);
