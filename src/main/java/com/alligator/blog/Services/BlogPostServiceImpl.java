@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -57,13 +58,17 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, OffsetDateTime startDate, OffsetDateTime endDate) {
+    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword,
+                                       OffsetDateTime startDate, OffsetDateTime endDate, String sortBy, String sortDirection) {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        // Determine the sort direction based on the provided parameter
+        Sort.Direction direction = sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortBy));
 
         Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
-                    .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
-                    .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
+                .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+                .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 
         Page<BlogPostEntity> blogPostPage = _blogPostRepository.findAll(specification, pageable);
 
