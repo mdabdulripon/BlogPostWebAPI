@@ -10,10 +10,12 @@ import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import com.alligator.blog.Shared.Enums.RequestOperationName;
 import com.alligator.blog.Shared.Enums.RequestOperationStatus;
 import org.modelmapper.ModelMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,15 +73,19 @@ public class BlogController {
     @GetMapping()
     public List<BlogPostResponseModel> getBlogs(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber,
                                                 @RequestParam(value = "pageSize", defaultValue = "3") int pageSize,
-                                                @RequestParam(value = "merchantName") String merchantName) {
+                                                @RequestParam(value = "merchantName") String merchantName,
+                                                @RequestParam(value = "keyword", required = false) String keyword,
+                                                @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime startDate,
+                                                @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime endDate
+    ) {
+
 
         List<BlogPostResponseModel> returnValue = new ArrayList<>();
         ModelMapper modelMapper = new ModelMapper();
 
-        // Call the findBlogs method from the service
-        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName);
+        // Call the findBlogs method with OffsetDateTime filters
+        List<BlogPostDto> blogPosts = _blogPostService.findBlogs(pageNumber, pageSize, merchantName, keyword, startDate, endDate);
 
-        // Convert each BlogPostDto to BlogPostResponseModel
         for (BlogPostDto blogPostDto : blogPosts) {
             BlogPostResponseModel blogPostResponseModel = modelMapper.map(blogPostDto, BlogPostResponseModel.class);
             returnValue.add(blogPostResponseModel);
@@ -87,5 +93,4 @@ public class BlogController {
 
         return returnValue;
     }
-
 }

@@ -2,14 +2,17 @@ package com.alligator.blog.Services;
 
 import com.alligator.blog.Entities.BlogPostEntity;
 import com.alligator.blog.Repositories.BlogPostRepository;
+import com.alligator.blog.Shared.BlogPostSpecifications;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,13 +57,16 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName) {
+    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, OffsetDateTime startDate, OffsetDateTime endDate) {
+
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        // Fetch paginated results based on merchant name
-        Page<BlogPostEntity> blogPostPage = _blogPostRepository.findByMerchantName(merchantName, pageable);
+        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
+                    .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+                    .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 
-        // Map entities to DTOs
+        Page<BlogPostEntity> blogPostPage = _blogPostRepository.findAll(specification, pageable);
+
         return blogPostPage.stream()
                 .map(blogPost -> new ModelMapper().map(blogPost, BlogPostDto.class))
                 .collect(Collectors.toList());
