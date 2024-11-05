@@ -1,5 +1,6 @@
 package com.alligator.blog.Models.Requests;
 
+import com.alligator.blog.Shared.Enums.BlogType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.OffsetDateTime;
@@ -9,6 +10,7 @@ public class QueryParamsRequestModel {
     private int pageSize = 3;
     private String merchantName;
     private String keyword;
+    private BlogType type;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime startDate;
@@ -50,6 +52,14 @@ public class QueryParamsRequestModel {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public BlogType getType() {
+        return type;
+    }
+
+    public void setType(BlogType type) {
+        this.type = type;
     }
 
     public OffsetDateTime getStartDate() {

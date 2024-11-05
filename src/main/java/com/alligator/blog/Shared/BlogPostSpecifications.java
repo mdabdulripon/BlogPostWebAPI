@@ -1,6 +1,7 @@
 package com.alligator.blog.Shared;
 
 import com.alligator.blog.Entities.BlogPostEntity;
+import com.alligator.blog.Shared.Enums.BlogType;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.OffsetDateTime;
@@ -11,7 +12,7 @@ public class BlogPostSpecifications {
         return (root, query, builder) -> builder.equal(root.get("merchantName"), merchantName);
     }
 
-    // perform search on the body & title fields
+    // Perform search on the body & title fields
     public static Specification<BlogPostEntity> hasTitleOrBody(String keyword) {
         return (root, query, builder) -> {
             if (keyword == null || keyword.isEmpty()) {
@@ -32,6 +33,7 @@ public class BlogPostSpecifications {
         }
     */
 
+    // Filter posts published within a date range
     public static Specification<BlogPostEntity> publishedWithinRange(OffsetDateTime startDate, OffsetDateTime endDate) {
         return (root, query, builder) -> {
             if (startDate == null && endDate == null) {
@@ -44,5 +46,10 @@ public class BlogPostSpecifications {
                 return builder.lessThanOrEqualTo(root.get("createdAt"), endDate);
             }
         };
+    }
+
+    // Filter by blog type
+    public static Specification<BlogPostEntity> hasType(BlogType type) {
+        return (root, query, builder) ->  type == null ? builder.conjunction() : builder.equal(root.get("type"), type);
     }
 }
