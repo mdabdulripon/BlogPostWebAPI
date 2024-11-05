@@ -78,6 +78,7 @@ public class BlogController {
                 params.getPageSize(),
                 params.getMerchantName(),
                 params.getKeyword(),
+                params.getType(),
                 params.getStartDate(),
                 params.getEndDate(),
                 params.getSortBy(),

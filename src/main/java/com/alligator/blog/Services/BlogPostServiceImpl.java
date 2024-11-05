@@ -4,6 +4,7 @@ import com.alligator.blog.Entities.BlogPostEntity;
 import com.alligator.blog.Repositories.BlogPostRepository;
 import com.alligator.blog.Shared.BlogPostSpecifications;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
+import com.alligator.blog.Shared.Enums.BlogType;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,7 +58,7 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword,
+    public List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, BlogType type,
                                        OffsetDateTime startDate, OffsetDateTime endDate, String sortBy, String sortDirection) {
 
         if (merchantName == null) {
@@ -69,7 +70,9 @@ public class BlogPostServiceImpl implements BlogPostService {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortBy));
 
-        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName)).and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+        Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
+                .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+                .and(BlogPostSpecifications.hasType(type))
                 .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 
         Page<BlogPostEntity> blogPostPage = _blogPostRepository.findAll(specification, pageable);
