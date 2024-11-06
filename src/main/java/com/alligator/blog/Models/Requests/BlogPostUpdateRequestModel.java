@@ -6,7 +6,7 @@ import com.alligator.blog.Shared.Enums.BlogType;
 import java.time.OffsetDateTime;
 
 public class BlogPostUpdateRequestModel {
-    private Long id;
+    private Long postId;
     private String userId;
     private String merchantName;
     private String title;
@@ -14,14 +14,13 @@ public class BlogPostUpdateRequestModel {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
-    private OffsetDateTime updatedAt = OffsetDateTime.now();
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getUserId() {
@@ -78,13 +77,5 @@ public class BlogPostUpdateRequestModel {
 
     public void setStatus(BlogStatus status) {
         this.status = status;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }

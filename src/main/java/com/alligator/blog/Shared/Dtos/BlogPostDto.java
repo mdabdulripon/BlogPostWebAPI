@@ -6,7 +6,7 @@ import com.alligator.blog.Shared.Enums.BlogType;
 import java.time.OffsetDateTime;
 
 public class BlogPostDto {
-    private Long id;
+    private Long postId;
     private String userId;
     private String merchantName;
     private String title;
@@ -18,12 +18,12 @@ public class BlogPostDto {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getUserId() {

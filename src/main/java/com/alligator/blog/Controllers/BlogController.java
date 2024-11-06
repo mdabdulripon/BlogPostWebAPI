@@ -27,12 +27,12 @@ public class BlogController {
         _blogPostService = blogPostService;
     }
 
-    @GetMapping(path = "/{id}")
-    public BlogPostResponseModel getBlogPost(@PathVariable Long id) {
+    @GetMapping(path = "/{postId}")
+    public BlogPostResponseModel getBlogPost(@PathVariable Long postId) {
         ModelMapper modelMapper = new ModelMapper();
         BlogPostResponseModel blogPostResponse = new BlogPostResponseModel();
 
-        BlogPostDto blogPost = _blogPostService.findBlogById(id);
+        BlogPostDto blogPost = _blogPostService.findBlogByPostId(postId);
         return modelMapper.map(blogPost, BlogPostResponseModel.class);
     }
 
@@ -57,11 +57,11 @@ public class BlogController {
     }
 
 
-    @DeleteMapping(path = "/{id}")
-    public OperationStatusResponseModel deleteBlog(@PathVariable Long id) {
+    @DeleteMapping(path = "/{postId}")
+    public OperationStatusResponseModel deleteBlog(@PathVariable Long postId) {
         OperationStatusResponseModel returnValue = new OperationStatusResponseModel();
         returnValue.setOperationName(RequestOperationName.DELETE.name());
-        _blogPostService.delete(id);
+        _blogPostService.delete(postId);
         returnValue.setOperationStatus(RequestOperationStatus.SUCCESS.name());
         return returnValue;
     }
