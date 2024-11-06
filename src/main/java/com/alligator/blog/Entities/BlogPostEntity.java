@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 public class BlogPostEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
 
     private String userId; // Reference to the User ID in UserWebAPI
     private String merchantName;
@@ -27,12 +27,12 @@ public class BlogPostEntity {
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
-    public Long getId() {
-        return id;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public String getUserId() {

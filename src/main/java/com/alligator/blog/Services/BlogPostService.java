@@ -14,7 +14,7 @@ public interface BlogPostService {
     List<BlogPostDto> findBlogs(int pageNumber, int pageSize, String merchantName, String keyword, BlogType type,
                                 OffsetDateTime startDate, OffsetDateTime endDate, String sortBy, String sortDirection);
 
-    BlogPostDto findBlogById(Long id);
+    BlogPostDto findBlogByPostId(Long postId);
 
-    void delete(Long id);
+    void delete(Long postId);
 }

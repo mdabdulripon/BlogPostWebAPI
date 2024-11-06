@@ -32,7 +32,7 @@ public class BlogPostServiceImpl implements BlogPostService {
         ModelMapper modelMapper = new ModelMapper();
         BlogPostEntity blogPostEntity = modelMapper.map(blogPostDto, BlogPostEntity.class);
         // Set the ID to null to ensure a new record is created
-        blogPostEntity.setId(null);
+        blogPostEntity.setPostId(null);
         BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
 
         return modelMapper.map(savePost, BlogPostDto.class);
@@ -40,9 +40,9 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     @Override
     public BlogPostDto update(BlogPostDto blogPostDto) {
-        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(blogPostDto.getId());
+        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostByPostId(blogPostDto.getPostId());
         if (blogPostEntity == null) {
-            throw new IllegalArgumentException("BlogPost with id " + blogPostDto.getId() + " not found");
+            throw new IllegalArgumentException("BlogPost with id " + blogPostDto.getPostId() + " not found");
         }
 
         blogPostEntity.setTitle(blogPostDto.getTitle());
@@ -51,6 +51,7 @@ public class BlogPostServiceImpl implements BlogPostService {
         blogPostEntity.setStatus(blogPostDto.getStatus());
         blogPostEntity.setMainImageUrl(blogPostDto.getMainImageUrl());
         blogPostEntity.setType(blogPostDto.getType());
+        blogPostEntity.setUpdatedAt(OffsetDateTime.now());
 
         BlogPostEntity updatePost = _blogPostRepository.save(blogPostEntity);
         ModelMapper modelMapper = new ModelMapper();
@@ -81,20 +82,20 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public BlogPostDto findBlogById(Long id) {
-        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(id);
+    public BlogPostDto findBlogByPostId(Long postId) {
+        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostByPostId(postId);
         if (blogPostEntity == null) {
-            throw new IllegalArgumentException("BlogPost with id " + id + " not found");
+            throw new IllegalArgumentException("BlogPost with id " + postId + " not found");
         }
 
         return new ModelMapper().map(blogPostEntity, BlogPostDto.class);
     }
 
     @Override
-    public void delete(Long id) {
-        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostById(id);
+    public void delete(Long postId) {
+        BlogPostEntity blogPostEntity = _blogPostRepository.findBlogPostByPostId(postId);
         if (blogPostEntity == null) {
-            throw new IllegalArgumentException("BlogPost with id " + id + " does not exist");
+            throw new IllegalArgumentException("BlogPost with id " + postId + " does not exist");
         }
 
         _blogPostRepository.delete(blogPostEntity);
