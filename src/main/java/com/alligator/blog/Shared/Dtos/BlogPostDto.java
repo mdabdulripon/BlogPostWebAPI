@@ -15,7 +15,7 @@ public class BlogPostDto {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
-    private List<ContentBlockDto> contentBlocks; // Use List<ContentBlockDto>
+    private List<ContentBlockDto> contentBlocks;
 
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
