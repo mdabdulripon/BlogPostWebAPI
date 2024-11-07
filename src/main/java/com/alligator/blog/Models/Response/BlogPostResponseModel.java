@@ -1,9 +1,11 @@
 package com.alligator.blog.Models.Response;
 
+import com.alligator.blog.Models.Requests.ContentBlockRequestModel;
 import com.alligator.blog.Shared.Enums.BlogStatus;
 import com.alligator.blog.Shared.Enums.BlogType;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class BlogPostResponseModel {
     private Long postId;
@@ -14,6 +16,7 @@ public class BlogPostResponseModel {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
+    private List<ContentBlockRequestModel> contentBlocks;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
 
@@ -80,6 +83,14 @@ public class BlogPostResponseModel {
 
     public void setStatus(BlogStatus status) {
         this.status = status;
+    }
+
+    public List<ContentBlockRequestModel> getContentBlocks() {
+        return contentBlocks;
+    }
+
+    public void setContentBlocks(List<ContentBlockRequestModel> contentBlocks) {
+        this.contentBlocks = contentBlocks;
     }
 
     public OffsetDateTime getCreatedAt() {

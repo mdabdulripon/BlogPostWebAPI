@@ -1,9 +1,12 @@
 package com.alligator.blog.Services;
 
 import com.alligator.blog.Entities.BlogPostEntity;
+import com.alligator.blog.Entities.ContentBlockEntity;
 import com.alligator.blog.Repositories.BlogPostRepository;
+import com.alligator.blog.Repositories.ContentBlockRepository;
 import com.alligator.blog.Shared.BlogPostSpecifications;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
+import com.alligator.blog.Shared.Dtos.ContentBlockDto;
 import com.alligator.blog.Shared.Enums.BlogType;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -21,9 +24,12 @@ import java.util.stream.Collectors;
 public class BlogPostServiceImpl implements BlogPostService {
 
     private final BlogPostRepository _blogPostRepository;
+    private final ContentBlockRepository _contentBlockRepository;
 
-    BlogPostServiceImpl(BlogPostRepository blogPostRepository) {
+
+    BlogPostServiceImpl(BlogPostRepository blogPostRepository, ContentBlockRepository contentBlockRepository) {
         _blogPostRepository = blogPostRepository;
+        _contentBlockRepository = contentBlockRepository;
     }
 
     @Override
@@ -33,8 +39,13 @@ public class BlogPostServiceImpl implements BlogPostService {
         BlogPostEntity blogPostEntity = modelMapper.map(blogPostDto, BlogPostEntity.class);
         // Set the ID to null to ensure a new record is created
         blogPostEntity.setPostId(null);
-        BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
 
+        if (blogPostEntity.getContentBlocks() != null) {
+            for (ContentBlockEntity contentBlock : blogPostEntity.getContentBlocks()) {
+                contentBlock.setBlogPost(blogPostEntity);
+            }
+        }
+        BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
         return modelMapper.map(savePost, BlogPostDto.class);
     }
 
