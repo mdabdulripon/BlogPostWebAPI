@@ -4,6 +4,7 @@ import com.alligator.blog.Shared.Enums.BlogStatus;
 import com.alligator.blog.Shared.Enums.BlogType;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class BlogPostDto {
     private Long postId;
@@ -14,6 +15,7 @@ public class BlogPostDto {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
+    private List<ContentBlockDto> contentBlocks;
 
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
@@ -80,6 +82,14 @@ public class BlogPostDto {
 
     public void setStatus(BlogStatus status) {
         this.status = status;
+    }
+
+    public List<ContentBlockDto> getContentBlocks() {
+        return contentBlocks;
+    }
+
+    public void setContentBlocks(List<ContentBlockDto> contentBlocks) {
+        this.contentBlocks = contentBlocks;
     }
 
     public OffsetDateTime getCreatedAt() {

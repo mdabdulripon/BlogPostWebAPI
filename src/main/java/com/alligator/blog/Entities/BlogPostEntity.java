@@ -6,8 +6,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
 import java.time.OffsetDateTime;
+import java.util.Set;
 
 
 @Entity(name = "blog_posts")
@@ -23,6 +27,10 @@ public class BlogPostEntity {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
+
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ContentBlockEntity> contentBlocks;
+
 
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
@@ -89,6 +97,14 @@ public class BlogPostEntity {
 
     public void setStatus(BlogStatus status) {
         this.status = status;
+    }
+
+    public Set<ContentBlockEntity> getContentBlocks() {
+        return contentBlocks;
+    }
+
+    public void setContentBlocks(Set<ContentBlockEntity> contentBlocks) {
+        this.contentBlocks = contentBlocks;
     }
 
     public OffsetDateTime getCreatedAt() {

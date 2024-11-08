@@ -8,6 +8,7 @@ import com.alligator.blog.Models.Response.OperationStatusResponseModel;
 import com.alligator.blog.Services.BlogPostService;
 import com.alligator.blog.Services.BlogPostServiceImpl;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
+import com.alligator.blog.Shared.Dtos.ContentBlockDto;
 import com.alligator.blog.Shared.Enums.RequestOperationName;
 import com.alligator.blog.Shared.Enums.RequestOperationStatus;
 import org.modelmapper.ModelMapper;
@@ -39,11 +40,22 @@ public class BlogController {
     @PostMapping
     public ResponseEntity<BlogPostResponseModel> CreateBlog(@RequestBody BlogPostCreateRequestModel blogPostCreateRequestModel) {
         ModelMapper modelMapper = new ModelMapper();
+
+        // Map BlogPostCreateRequestModel to BlogPostDto
         BlogPostDto blogPostDto = modelMapper.map(blogPostCreateRequestModel, BlogPostDto.class);
 
-        BlogPostDto createBlog = _blogPostService.create(blogPostDto);
-        BlogPostResponseModel returnValue = modelMapper.map(createBlog, BlogPostResponseModel.class);
+        // Explicitly map content blocks to avoid incorrect mapping
+        List<ContentBlockDto> contentBlockDtos = blogPostCreateRequestModel.getContentBlocks().stream()
+                .map(cb -> modelMapper.map(cb, ContentBlockDto.class))
+                .toList();
 
+        blogPostDto.setContentBlocks(contentBlockDtos);
+
+        // Create the blog post
+        BlogPostDto createBlog = _blogPostService.create(blogPostDto);
+
+        // Map the response
+        BlogPostResponseModel returnValue = modelMapper.map(createBlog, BlogPostResponseModel.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
 

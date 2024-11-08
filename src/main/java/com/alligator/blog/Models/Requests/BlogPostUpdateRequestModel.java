@@ -1,9 +1,11 @@
 package com.alligator.blog.Models.Requests;
 
+import com.alligator.blog.Shared.Dtos.ContentBlockDto;
 import com.alligator.blog.Shared.Enums.BlogStatus;
 import com.alligator.blog.Shared.Enums.BlogType;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 public class BlogPostUpdateRequestModel {
     private Long postId;
@@ -14,6 +16,7 @@ public class BlogPostUpdateRequestModel {
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
+    private List<ContentBlockRequestModel> contentBlocks;
 
     public Long getPostId() {
         return postId;
@@ -77,5 +80,13 @@ public class BlogPostUpdateRequestModel {
 
     public void setStatus(BlogStatus status) {
         this.status = status;
+    }
+
+    public List<ContentBlockRequestModel> getContentBlocks() {
+        return contentBlocks;
+    }
+
+    public void setContentBlocks(List<ContentBlockRequestModel> contentBlocks) {
+        this.contentBlocks = contentBlocks;
     }
 }

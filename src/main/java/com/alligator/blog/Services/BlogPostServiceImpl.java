@@ -1,9 +1,12 @@
 package com.alligator.blog.Services;
 
 import com.alligator.blog.Entities.BlogPostEntity;
+import com.alligator.blog.Entities.ContentBlockEntity;
 import com.alligator.blog.Repositories.BlogPostRepository;
+import com.alligator.blog.Repositories.ContentBlockRepository;
 import com.alligator.blog.Shared.BlogPostSpecifications;
 import com.alligator.blog.Shared.Dtos.BlogPostDto;
+import com.alligator.blog.Shared.Dtos.ContentBlockDto;
 import com.alligator.blog.Shared.Enums.BlogType;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -14,16 +17,21 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class BlogPostServiceImpl implements BlogPostService {
 
     private final BlogPostRepository _blogPostRepository;
+    private final ContentBlockRepository _contentBlockRepository;
 
-    BlogPostServiceImpl(BlogPostRepository blogPostRepository) {
+
+    BlogPostServiceImpl(BlogPostRepository blogPostRepository, ContentBlockRepository contentBlockRepository) {
         _blogPostRepository = blogPostRepository;
+        _contentBlockRepository = contentBlockRepository;
     }
 
     @Override
@@ -33,8 +41,13 @@ public class BlogPostServiceImpl implements BlogPostService {
         BlogPostEntity blogPostEntity = modelMapper.map(blogPostDto, BlogPostEntity.class);
         // Set the ID to null to ensure a new record is created
         blogPostEntity.setPostId(null);
-        BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
 
+        if (blogPostEntity.getContentBlocks() != null) {
+            for (ContentBlockEntity contentBlock : blogPostEntity.getContentBlocks()) {
+                contentBlock.setBlogPost(blogPostEntity);
+            }
+        }
+        BlogPostEntity savePost = _blogPostRepository.save(blogPostEntity);
         return modelMapper.map(savePost, BlogPostDto.class);
     }
 
@@ -45,6 +58,9 @@ public class BlogPostServiceImpl implements BlogPostService {
             throw new IllegalArgumentException("BlogPost with id " + blogPostDto.getPostId() + " not found");
         }
 
+        ModelMapper modelMapper = new ModelMapper();
+
+        // Update basic fields of the blog post
         blogPostEntity.setTitle(blogPostDto.getTitle());
         blogPostEntity.setBody(blogPostDto.getBody());
         blogPostEntity.setUpdatedAt(blogPostDto.getUpdatedAt());
@@ -53,8 +69,21 @@ public class BlogPostServiceImpl implements BlogPostService {
         blogPostEntity.setType(blogPostDto.getType());
         blogPostEntity.setUpdatedAt(OffsetDateTime.now());
 
+        // Update content blocks
+        Set<ContentBlockEntity> updatedContentBlocks = new HashSet<>();
+        if (blogPostDto.getContentBlocks() != null) {
+            for (ContentBlockDto contentBlockDto : blogPostDto.getContentBlocks()) {
+                ContentBlockEntity contentBlockEntity = modelMapper.map(contentBlockDto, ContentBlockEntity.class);
+                contentBlockEntity.setBlogPost(blogPostEntity);
+                updatedContentBlocks.add(contentBlockEntity);
+            }
+        }
+
+        // Clear existing content blocks and set new ones
+        blogPostEntity.getContentBlocks().clear();
+        blogPostEntity.getContentBlocks().addAll(updatedContentBlocks);
+
         BlogPostEntity updatePost = _blogPostRepository.save(blogPostEntity);
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(updatePost, BlogPostDto.class);
     }
 
