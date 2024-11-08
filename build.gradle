@@ -29,7 +29,7 @@ dependencies {
 }
 
 tasks.named('bootJar') {
-	mainClass = 'com.alligator.blog.BlogWebApiApplication'
+	mainClass = 'com.alligator.blog.post.BlogWebApiApplication'
 }
 
 test {
