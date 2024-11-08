@@ -4,10 +4,10 @@
 echo "Waiting for MySQL to start..."
 sleep 10  # Adjust the sleep duration if needed
 
-# Connect to MySQL and execute commands
-mysql -u root -prootPassword <<EOF
-CREATE DATABASE IF NOT EXISTS blogs_db;
-GRANT ALL PRIVILEGES ON blogs_db.* TO 'admin'@'%';
+# Execute MySQL commands within the Docker container
+docker exec -i mysql mysql -u root -prootPassword <<EOF
+CREATE DATABASE IF NOT EXISTS blogpost_db;
+GRANT ALL PRIVILEGES ON blogpost_db.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
 EOF
 
