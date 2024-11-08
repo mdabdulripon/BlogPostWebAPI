@@ -1,8 +1,9 @@
-# [BlogWebAPI](http://localhost:8088/swagger-ui/index.html#/)
+# [BlogPostWebAPI](http://localhost:8088/swagger-ui/index.html#/)
 
 This project empowers merchants to create and manage their own blog posts, enabling them to consistently maintain and update their content
 
 ### Must Have TODO (MVP)
+
 - [x] Add Type of the blogs
 - [x] Add content blocks, this can replace the body
 - [x] Add unit test
@@ -13,6 +14,7 @@ This project empowers merchants to create and manage their own blog posts, enabl
   ```
 
 ### Advance TODO
+
 - [x] Add Automation Test
 - [x] Add Comments Entity
   ```
