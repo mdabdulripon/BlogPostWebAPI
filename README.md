@@ -4,14 +4,8 @@ This project empowers merchants to create and manage their own blog posts, enabl
 
 ### Must Have TODO (MVP)
 
-- [x] Add Type of the blogs
-- [x] Add content blocks, this can replace the body
-- [x] Add unit test
 
-  ```
-  	@OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  	private Set<ContentBlock> contentBlocks;
-  ```
+- [x] Add unit test
 
 ### Advance TODO
 

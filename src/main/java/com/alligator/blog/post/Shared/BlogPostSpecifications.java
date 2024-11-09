@@ -12,16 +12,16 @@ public class BlogPostSpecifications {
         return (root, query, builder) -> builder.equal(root.get("merchantName"), merchantName);
     }
 
-    // Perform search on the body & title fields
-    public static Specification<BlogPostEntity> hasTitleOrBody(String keyword) {
+    // Perform search on the title & subtitle fields
+    public static Specification<BlogPostEntity> searchOnTitleOrSubtitle(String keyword) {
         return (root, query, builder) -> {
             if (keyword == null || keyword.isEmpty()) {
                 return builder.conjunction();
             }
-            // `OR` condition to match keyword in either title or body
+            // `OR` condition to match keyword in either title or subtitle
             return builder.or(
                     builder.like(root.get("title"), "%" + keyword + "%"),
-                    builder.like(root.get("body"), "%" + keyword + "%")
+                    builder.like(root.get("subTitle"), "%" + keyword + "%")
             );
         };
     }
