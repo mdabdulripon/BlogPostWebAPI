@@ -62,7 +62,7 @@ public class BlogPostServiceImpl implements BlogPostService {
 
         // Update basic fields of the blog post
         blogPostEntity.setTitle(blogPostDto.getTitle());
-        blogPostEntity.setBody(blogPostDto.getBody());
+        blogPostEntity.setSubTitle(blogPostDto.getSubTitle());
         blogPostEntity.setUpdatedAt(blogPostDto.getUpdatedAt());
         blogPostEntity.setStatus(blogPostDto.getStatus());
         blogPostEntity.setMainImageUrl(blogPostDto.getMainImageUrl());
@@ -101,7 +101,7 @@ public class BlogPostServiceImpl implements BlogPostService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortBy));
 
         Specification<BlogPostEntity> specification = Specification.where(BlogPostSpecifications.hasMerchantName(merchantName))
-                .and(BlogPostSpecifications.hasTitleOrBody(keyword))  // Search in both title and body
+                .and(BlogPostSpecifications.searchOnTitleOrSubtitle(keyword))  // Search in both title or subTitle
                 .and(BlogPostSpecifications.hasType(type))
                 .and(BlogPostSpecifications.publishedWithinRange(startDate, endDate));
 

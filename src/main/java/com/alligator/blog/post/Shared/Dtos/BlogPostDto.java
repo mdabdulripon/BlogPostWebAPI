@@ -11,7 +11,7 @@ public class BlogPostDto {
     private String userId;
     private String merchantName;
     private String title;
-    private String body;
+    private String subTitle;
     private String mainImageUrl;
     private BlogType type;
     private BlogStatus status;
@@ -52,12 +52,12 @@ public class BlogPostDto {
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public String getMainImageUrl() {

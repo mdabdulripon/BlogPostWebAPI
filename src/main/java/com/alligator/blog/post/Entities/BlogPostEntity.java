@@ -23,13 +23,23 @@ public class BlogPostEntity {
     private String userId; // Reference to the User ID in UserWebAPI
     private String merchantName;
     private String title;
-    private String body;
+    private String subTitle;
     private String mainImageUrl;
-    private BlogType type;
+    private BlogType type;  // TODO: Rename this to CategoryType
     private BlogStatus status;
 
     @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ContentBlockEntity> contentBlocks;
+
+    /*
+    @ManyToMany
+    @JoinTable(
+        name = "blog_post_tags",
+        joinColumns = @JoinColumn(name = "blog_post_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
+    * */
 
 
     private OffsetDateTime createdAt;
@@ -67,12 +77,12 @@ public class BlogPostEntity {
         this.title = title;
     }
 
-    public String getBody() {
-        return body;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public String getMainImageUrl() {
